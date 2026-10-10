@@ -1,12 +1,12 @@
 package routing;
 
 /**
- * The cost of a route. Routes are compared by fewer stops first, then by fewer transfers.
+ * The cost of a route: how many stops it has and how many times the traveler changes lines.
  *
  * @param stops     the number of rides between adjacent stations.
  * @param transfers the number of line changes.
  */
-public record RouteCost(int stops, int transfers) implements Comparable<RouteCost> {
+public record RouteCost(int stops, int transfers) {
     /**
      * The cost of staying where you are.
      */
@@ -39,20 +39,5 @@ public record RouteCost(int stops, int transfers) implements Comparable<RouteCos
      */
     public RouteCost withTransfer() {
         return new RouteCost(stops, transfers + 1);
-    }
-
-    /**
-     * {@inheritDoc}
-     * <p>
-     * Fewer stops always win. Transfers only break ties between routes with the same number of stops,
-     * so the ordering stays correct for networks that have more than one transfer station.
-     */
-    @Override
-    public int compareTo(RouteCost other) {
-        if (stops != other.stops) {
-            return Integer.compare(stops, other.stops);
-        }
-
-        return Integer.compare(transfers, other.transfers);
     }
 }

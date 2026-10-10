@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class RouteCostTest {
     @Test
@@ -25,28 +24,6 @@ class RouteCostTest {
         var cost = new RouteCost(2, 1).withTransfer();
 
         assertEquals(new RouteCost(2, 2), cost);
-    }
-
-    @Test
-    void fewerStopsWinsEvenWithMoreTransfers() {
-        var fewerStops = new RouteCost(3, 5);
-        var moreStops = new RouteCost(4, 0);
-
-        assertTrue(fewerStops.compareTo(moreStops) < 0);
-        assertTrue(moreStops.compareTo(fewerStops) > 0);
-    }
-
-    @Test
-    void fewerTransfersWinsWhenStopsAreEqual() {
-        var fewerTransfers = new RouteCost(3, 1);
-        var moreTransfers = new RouteCost(3, 2);
-
-        assertTrue(fewerTransfers.compareTo(moreTransfers) < 0);
-    }
-
-    @Test
-    void equalCostsCompareAsEqual() {
-        assertEquals(0, new RouteCost(3, 1).compareTo(new RouteCost(3, 1)));
     }
 
     @Test
