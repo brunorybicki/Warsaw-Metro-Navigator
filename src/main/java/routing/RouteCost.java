@@ -4,7 +4,7 @@ package routing;
  * The cost of a route. Routes are compared by fewer stops first, then by fewer transfers.
  *
  * @param stops     the number of rides between adjacent stations.
- * @param transfers the number of lines changes.
+ * @param transfers the number of line changes.
  */
 public record RouteCost(int stops, int transfers) implements Comparable<RouteCost> {
     /**

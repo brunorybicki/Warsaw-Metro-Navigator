@@ -14,6 +14,6 @@ public record MetroLine(String lineName) {
      * @throws NullPointerException if the line name is null.
      */
     public MetroLine {
-        Objects.requireNonNull(lineName,"line name must not be null");
+        Objects.requireNonNull(lineName, "line name must not be null");
     }
 }
