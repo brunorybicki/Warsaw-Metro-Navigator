@@ -43,8 +43,8 @@ public record RouteCost(int stops, int transfers) implements Comparable<RouteCos
 
     /**
      * {@inheritDoc}
-     *
-     * <p>Fewer stops always win. Transfers only break ties between routes with the same number of stops,
+     * <p>
+     * Fewer stops always win. Transfers only break ties between routes with the same number of stops,
      * so the ordering stays correct for networks that have more than one transfer station.
      */
     @Override
