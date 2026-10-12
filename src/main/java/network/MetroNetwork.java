@@ -19,6 +19,8 @@ import java.util.Set;
  * It knows nothing about any particular city.
  */
 public class MetroNetwork {
+    // Both maps describe the same lines and must always be changed together, which is what addLine does.
+    // The first serves the menus and the travel direction, the second serves the route search.
     private final Map<MetroLine, List<Station>> stationsByLine = new LinkedHashMap<>();
     private final Map<StationNode, List<Connection>> connectionsByNode = new HashMap<>();
 
@@ -94,6 +96,7 @@ public class MetroNetwork {
     public List<Connection> connectionsFrom(StationNode node) {
         requireKnownNode(node);
 
+        // A copy, because the stored list is still changed when more connections are added to the network.
         return List.copyOf(connectionsByNode.get(node));
     }
 

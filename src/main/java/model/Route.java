@@ -26,6 +26,7 @@ public record Route(StationNode start, List<Connection> connections) {
 
         connections = List.copyOf(connections);
 
+        // Walk along the route: every connection must begin at the node where the previous one ended.
         var current = start;
 
         for (var connection : connections) {

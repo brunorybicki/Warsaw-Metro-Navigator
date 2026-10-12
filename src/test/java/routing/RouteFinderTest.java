@@ -7,7 +7,7 @@ import network.MetroNetwork;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -124,6 +124,12 @@ class RouteFinderTest {
     }
 
     private List<Station> stations(String... names) {
-        return Arrays.stream(names).map(Station::new).toList();
+        var stations = new ArrayList<Station>();
+
+        for (var name : names) {
+            stations.add(new Station(name));
+        }
+
+        return stations;
     }
 }
