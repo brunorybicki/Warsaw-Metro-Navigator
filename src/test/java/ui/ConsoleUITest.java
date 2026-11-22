@@ -99,6 +99,22 @@ class ConsoleUITest {
     }
 
     @Test
+    void lineGivenAsTextIsAskedAgain() {
+        var start = consoleUI("M1\n1\n10\n").chooseStart();
+
+        assertEquals(new StationNode(new Station("Centrum"), network.lines().get(0)), start);
+        assertTrue(output().contains("Invalid choice. Try again (choose a number between 1 and 2):"));
+    }
+
+    @Test
+    void stationNumberAboveTheLineIsAskedAgain() {
+        var destination = consoleUI("2\n19\n15\n").chooseDestination();
+
+        assertEquals(new StationNode(new Station("Trocka"), network.lines().get(1)), destination);
+        assertTrue(output().contains("Invalid choice. Try again (choose a number between 1 and 18):"));
+    }
+
+    @Test
     void searchingMessageIsFollowedByABlankLine() {
         consoleUI("").showSearching();
 
