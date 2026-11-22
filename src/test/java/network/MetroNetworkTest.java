@@ -140,4 +140,40 @@ class MetroNetworkTest {
     void askingForConnectionsOfAnUnknownNodeIsRejected() {
         assertThrows(IllegalArgumentException.class, () -> network.connectionsFrom(oneOnA));
     }
+
+    @Test
+    void movingToALaterStationHeadsTowardsTheLastStation() {
+        network.addLine(lineA, stationsOfA);
+
+        assertEquals(new Station("Three"), network.terminalTowards(oneOnA, twoOnA));
+    }
+
+    @Test
+    void movingToAnEarlierStationHeadsTowardsTheFirstStation() {
+        network.addLine(lineA, stationsOfA);
+
+        assertEquals(new Station("One"), network.terminalTowards(threeOnA, twoOnA));
+    }
+
+    @Test
+    void directionDependsOnTheOrderOfTheStationsOnly() {
+        network.addLine(lineA, List.of(new Station("Three"), new Station("Two"), new Station("One")));
+
+        assertEquals(new Station("One"), network.terminalTowards(threeOnA, twoOnA));
+    }
+
+    @Test
+    void directionBetweenDifferentLinesIsRejected() {
+        network.addLine(lineA, stationsOfA);
+        network.addLine(lineB, stationsOfB);
+
+        assertThrows(IllegalArgumentException.class, () -> network.terminalTowards(twoOnA, twoOnB));
+    }
+
+    @Test
+    void directionFromANodeToItselfIsRejected() {
+        network.addLine(lineA, stationsOfA);
+
+        assertThrows(IllegalArgumentException.class, () -> network.terminalTowards(twoOnA, twoOnA));
+    }
 }

@@ -101,6 +101,39 @@ public class MetroNetwork {
     }
 
     /**
+     * Returns the terminal of the line that a traveler heads towards when going from one node to another.
+     * <p>
+     * The direction comes only from the order of the stations: moving to a later station heads towards the last
+     * station of the line, moving to an earlier one heads towards the first. No line or station is special-cased.
+     *
+     * @param from the node where the ride starts.
+     * @param to   the node where the ride ends.
+     * @throws NullPointerException     if a node is null.
+     * @throws IllegalArgumentException if a node is not in the network, the nodes are on different lines,
+     *                                  or both nodes are the same.
+     */
+    public Station terminalTowards(StationNode from, StationNode to) {
+        requireKnownNode(from);
+        requireKnownNode(to);
+
+        if (!from.line().equals(to.line())) {
+            throw new IllegalArgumentException("nodes must be on the same line: " + from + ", " + to);
+        }
+
+        if (from.equals(to)) {
+            throw new IllegalArgumentException("nodes must be different to have a direction: " + from);
+        }
+
+        var stations = stationsOf(from.line());
+
+        if (stations.indexOf(to.station()) > stations.indexOf(from.station())) {
+            return stations.getLast();
+        } else {
+            return stations.getFirst();
+        }
+    }
+
+    /**
      * Fails fast when the line cannot be added: it is null, already known, or its stations are missing or repeated.
      * A repeated station would make two nodes of the line identical and break its connections.
      */
