@@ -71,7 +71,7 @@ public class MetroNetwork {
     }
 
     /**
-     * Returns the stations of a line, in travel order. The first and the last one are the terminals of the line.
+     * Returns the stations of a line, in travel order. The first and the last are the terminals of the line.
      *
      * @param line the line whose stations are requested.
      * @throws IllegalArgumentException if the line is not in the network.
@@ -104,7 +104,7 @@ public class MetroNetwork {
      * Returns the terminal of the line that a traveler heads towards when going from one node to another.
      * <p>
      * The direction comes only from the order of the stations: moving to a later station heads towards the last
-     * station of the line, moving to an earlier one heads towards the first. No line or station is special-cased.
+     * station of the line; moving to an earlier one heads towards the first. No line or station is special-cased.
      *
      * @param from the node where the ride starts.
      * @param to   the node where the ride ends.

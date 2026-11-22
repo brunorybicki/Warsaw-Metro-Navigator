@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Turns a calculated route into the text shown to the user: the stations, the travel directions, the transfers
+ * Turns a calculated route into the text shown to the user: the stations, the travel directions, the transfers,
  * and the totals.
  */
 public class RouteFormatter {
@@ -28,7 +28,7 @@ public class RouteFormatter {
     }
 
     /**
-     * Returns the route as text, one line per station, direction or transfer, followed by the totals.
+     * Returns the route as text, one line per station, direction, or transfer, followed by the totals.
      *
      * @param route the route to show.
      * @throws NullPointerException if the route is null.
@@ -57,9 +57,9 @@ public class RouteFormatter {
     }
 
     /**
-     * Adds the stations, directions and transfers of the route, after its start station.
+     * Adds the stations, directions, and transfers of the route, after its start station.
      * <p>
-     * A direction is shown only when a ride on a line begins. After a transfer the station is shown again,
+     * A direction is shown only when a ride on a line begins. After a transfer, the station is shown again,
      * but only if a ride follows, because a route can also end with the transfer.
      */
     private void addJourney(Route route, List<String> lines) {

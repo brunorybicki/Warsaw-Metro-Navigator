@@ -26,7 +26,7 @@ public class InputReader {
 
     /**
      * Asks for a number between 1 and the given maximum, both inclusive, until the user types a valid one.
-     * Anything else, such as text, symbols, an empty line or a number out of range, is answered with an error
+     * Anything else, such as text, symbols, an empty line, or a number out of range, is answered with an error
      * message and the question is asked again.
      *
      * @param maxChoice the highest valid number.

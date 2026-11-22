@@ -136,7 +136,7 @@ public class ConsoleUI {
     }
 
     /**
-     * Prints the question and the numbered options, and returns the position of the option the user picked,
+     * Prints the question and the numbered options and returns the position of the option the user picked,
      * counted from 0.
      */
     private int chooseIndex(String question, List<String> options) {

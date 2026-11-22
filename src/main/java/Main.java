@@ -8,11 +8,11 @@ import ui.RouteFormatter;
 import java.util.Scanner;
 
 /**
- * Starts the Warsaw Metro Navigator. It only builds the objects and hands over to the application.
+ * Starts the Warsaw Metro Navigator. It only builds the objects and hands them over to the application.
  */
 public class Main {
     /**
-     * Builds the application for the Warsaw Metro and the terminal, and runs it.
+     * Builds the application for the Warsaw Metro and the terminal and runs it.
      */
     public static void main(String[] args) {
         var network = WarsawMetroData.createNetwork();
