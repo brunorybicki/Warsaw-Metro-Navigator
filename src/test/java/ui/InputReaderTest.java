@@ -98,7 +98,7 @@ class InputReaderTest {
 
     @Test
     void endOfInputIsReported() {
-        assertThrows(IllegalStateException.class, () -> reader("x\n").readChoice(2));
+        assertThrows(InputEndedException.class, () -> reader("x\n").readChoice(2));
     }
 
     @Test

@@ -32,7 +32,7 @@ public class InputReader {
      * @param maxChoice the highest valid number.
      * @return the number chosen by the user.
      * @throws IllegalArgumentException if the maximum is lower than 1.
-     * @throws IllegalStateException    if the input ends before a valid number is typed.
+     * @throws InputEndedException      if the input ends before a valid number is typed.
      */
     public int readChoice(int maxChoice) {
         if (maxChoice < 1) {
@@ -73,7 +73,7 @@ public class InputReader {
      */
     private String readLine() {
         if (!input.hasNextLine()) {
-            throw new IllegalStateException("the input ended before a valid choice was made");
+            throw new InputEndedException();
         }
 
         return input.nextLine();
