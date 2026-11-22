@@ -82,6 +82,13 @@ public class ConsoleUI {
     }
 
     /**
+     * Tells the user that the program ends because there is no more input to read.
+     */
+    public void showInputEnded() {
+        output.println("Input ended. Goodbye!");
+    }
+
+    /**
      * Asks for a line and then for a station on it, and confirms the choice under the given heading.
      *
      * @param purpose the word used in the questions, such as "starting" or "destination".
