@@ -83,13 +83,17 @@ public class ConsoleUI {
 
     /**
      * Tells the user that the program ends because there is no more input to read.
+     * <p>
+     * The input ends without the user pressing Enter, so the cursor is still behind the prompt.
+     * The message therefore starts on a new line.
      */
     public void showInputEnded() {
+        output.println();
         output.println("Input ended. Goodbye!");
     }
 
     /**
-     * Asks for a line and then for a station on it, and confirms the choice under the given heading.
+     * Asks for a line and then for a station on it and confirms the choice under the given heading.
      *
      * @param purpose the word used in the questions, such as "starting" or "destination".
      * @param heading the heading printed above the chosen station, such as "START:".

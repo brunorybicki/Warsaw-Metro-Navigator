@@ -128,6 +128,13 @@ class ConsoleUITest {
         assertEquals("YOUR ROUTE:\nCentrum\n", output());
     }
 
+    @Test
+    void inputEndedMessageStartsOnANewLine() {
+        consoleUI("").showInputEnded();
+
+        assertEquals("\nInput ended. Goodbye!\n", output());
+    }
+
     private ConsoleUI consoleUI(String typedText) {
         var output = new PrintStream(outputBytes, true, StandardCharsets.UTF_8);
         var inputReader = new InputReader(new Scanner(typedText), output);

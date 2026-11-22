@@ -169,7 +169,7 @@ class MetroNavigatorAppTest {
     void endOfInputEndsTheProgramCalmly() {
         run("1\n");
 
-        assertTrue(output().endsWith("Input ended. Goodbye!\n"));
+        assertTrue(output().endsWith("(21) Kabaty\n> \nInput ended. Goodbye!\n"));
     }
 
     private void run(String typedText) {
