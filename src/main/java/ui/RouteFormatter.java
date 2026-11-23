@@ -63,7 +63,9 @@ public class RouteFormatter {
      * but only if a ride follows, because a route can also end with the transfer.
      */
     private void addJourney(Route route, List<String> lines) {
+        // True when the next ride starts on a line, so it needs a direction line first.
         var rideBegins = true;
+        // False right after a transfer: the station is printed again only if a ride follows.
         var stationShown = true;
 
         for (var connection : route.connections()) {

@@ -66,6 +66,7 @@ public class RouteFinder {
         visited.add(current);
 
         for (var connection : network.connectionsFrom(current)) {
+            // Connections go both ways, so without this check the search would bounce between two stations forever.
             if (!visited.contains(connection.to())) {
                 path.add(connection);
 
@@ -73,10 +74,12 @@ public class RouteFinder {
                     return true;
                 }
 
+                // A dead end: take the connection back out of the path before trying the next one.
                 path.removeLast();
             }
         }
 
+        // Every connection from here leads to a dead end or to a visited station.
         return false;
     }
 }

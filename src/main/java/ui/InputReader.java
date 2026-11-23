@@ -27,7 +27,7 @@ public class InputReader {
     /**
      * Asks for a number between 1 and the given maximum, both inclusive, until the user types a valid one.
      * Anything else, such as text, symbols, an empty line, or a number out of range, is answered with an error
-     * message and the question is asked again.
+     * message, and the question is asked again.
      *
      * @param maxChoice the highest valid number.
      * @return the number chosen by the user.
@@ -42,6 +42,7 @@ public class InputReader {
         while (true) {
             output.print("> ");
             var line = readLine().trim();
+            // The user's Enter ends the line; this adds the blank line that follows every answer in the CLI examples.
             output.println();
 
             if (isValidChoice(line, maxChoice)) {

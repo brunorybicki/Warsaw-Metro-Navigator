@@ -167,6 +167,8 @@ public class MetroNetwork {
         }
 
         for (int i = 1; i < nodes.size(); i++) {
+            // Each node gets its connection to the previous station before the one to the next station,
+            // which is also the order in which RouteFinder tries them.
             connectBothWays(nodes.get(i - 1), nodes.get(i), ConnectionType.RIDE);
         }
     }
