@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -139,6 +140,20 @@ class MetroNetworkTest {
     @Test
     void askingForConnectionsOfAnUnknownNodeIsRejected() {
         assertThrows(IllegalArgumentException.class, () -> network.connectionsFrom(oneOnA));
+    }
+
+    @Test
+    void networkContainsTheNodesOfItsLines() {
+        network.addLine(lineA, stationsOfA);
+
+        assertTrue(network.contains(twoOnA));
+    }
+
+    @Test
+    void networkDoesNotContainTheSameStationOnAnotherLine() {
+        network.addLine(lineA, stationsOfA);
+
+        assertFalse(network.contains(twoOnB));
     }
 
     @Test

@@ -38,11 +38,21 @@ public class RouteFinder {
      * @param destination the node where the journey ends.
      * @return the route from the start node to the destination node.
      * @throws NullPointerException     if a node is null.
-     * @throws IllegalArgumentException if the start node is not in the network or the destination cannot be reached.
+     * @throws IllegalArgumentException if a node is not in the network or the destination cannot be reached.
      */
     public Route findRoute(StationNode start, StationNode destination) {
         Objects.requireNonNull(start, "start must not be null");
         Objects.requireNonNull(destination, "destination must not be null");
+
+        // Both nodes are checked first, because walk() reports success at once when the start equals the destination,
+        // even if that node is not in the network.
+        if (!network.contains(start)) {
+            throw new IllegalArgumentException("start is not in the network: " + start);
+        }
+
+        if (!network.contains(destination)) {
+            throw new IllegalArgumentException("destination is not in the network: " + destination);
+        }
 
         var path = new ArrayList<Connection>();
 

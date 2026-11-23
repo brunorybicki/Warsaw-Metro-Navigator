@@ -12,6 +12,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Tests the route finder on a small synthetic network, so it is independent of any real city.
@@ -102,6 +103,22 @@ class RouteFinderTest {
         var unknown = node(new MetroLine("C"), "Seven");
 
         assertThrows(IllegalArgumentException.class, () -> finder.findRoute(unknown, oneOnA));
+    }
+
+    @Test
+    void destinationOutsideTheNetworkIsRejected() {
+        var unknown = node(new MetroLine("C"), "Seven");
+
+        var exception = assertThrows(IllegalArgumentException.class, () -> finder.findRoute(oneOnA, unknown));
+
+        assertTrue(exception.getMessage().startsWith("destination is not in the network"));
+    }
+
+    @Test
+    void sameNodeOutsideTheNetworkAsStartAndDestinationIsRejected() {
+        var unknown = node(new MetroLine("C"), "Seven");
+
+        assertThrows(IllegalArgumentException.class, () -> finder.findRoute(unknown, unknown));
     }
 
     @Test

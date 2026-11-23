@@ -87,6 +87,15 @@ public class MetroNetwork {
     }
 
     /**
+     * Tells whether a node belongs to this network, that is, whether its station lies on one of its lines.
+     *
+     * @param node the node to look for.
+     */
+    public boolean contains(StationNode node) {
+        return connectionsByNode.containsKey(node);
+    }
+
+    /**
      * Returns the connections that start at a node.
      *
      * @param node the node whose outgoing connections are requested.
@@ -187,7 +196,7 @@ public class MetroNetwork {
     private void requireKnownNode(StationNode node) {
         Objects.requireNonNull(node, "node must not be null");
 
-        if (!connectionsByNode.containsKey(node)) {
+        if (!contains(node)) {
             throw new IllegalArgumentException("node is not in the network: " + node);
         }
     }
