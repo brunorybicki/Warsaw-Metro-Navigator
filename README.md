@@ -1,6 +1,7 @@
 # Warsaw Metro Navigator
 
-A command-line route planner for the Warsaw Metro, written in Java. Choose a starting station and a destination on lines M1 and M2, and the program prints the route with the travel direction, the transfer, and the number of stops.
+A command-line route planner for the Warsaw Metro, written in Java. Choose a starting station and a destination on lines
+M1 and M2, and the program prints the route with the travel direction, the transfer, and the number of stops.
 
 ```text
 YOUR ROUTE:
@@ -32,7 +33,8 @@ Have a nice journey!
 - Stations and lines are chosen from numbered menus
 - Every route shows the travel direction (`towards …`), transfers, and totals
 - Special cases: the same station on both lines (a transfer only) and identical start and destination
-- Invalid input (text, symbols, empty lines, numbers out of range) is rejected with a message and asked again; the program never crashes on input
+- Invalid input (text, symbols, empty lines, numbers out of range) is rejected with a message and asked again; the
+  program never crashes on input
 
 ## Requirements
 
@@ -64,37 +66,118 @@ mvn test
 ## Project structure
 
 ```text
-src/main/java/
-├── Main.java                  builds the objects and starts the application
-├── app/                       MetroNavigatorApp: runs the dialogue from welcome to route
-├── model/                     Station, MetroLine, StationNode, Connection, Route
-├── network/                   MetroNetwork: a generic network of lines and connections
-│   └── data/                  WarsawMetroData: the only place that knows Warsaw stations
-├── routing/                   RouteFinder and RouteCost
-└── ui/                        ConsoleUI, InputReader, RouteFormatter
+Warsaw-Metro-Navigator/
+├── README.md
+├── pom.xml
+└── src/
+    ├── main/
+    │   └── java/
+    │       ├── Main.java
+    │       ├── app/
+    │       │   └── MetroNavigatorApp.java
+    │       ├── model/
+    │       │   ├── Connection.java
+    │       │   ├── ConnectionType.java
+    │       │   ├── MetroLine.java
+    │       │   ├── Route.java
+    │       │   ├── Station.java
+    │       │   └── StationNode.java
+    │       ├── network/
+    │       │   ├── MetroNetwork.java
+    │       │   └── data/
+    │       │       └── WarsawMetroData.java
+    │       ├── routing/
+    │       │   ├── RouteCost.java
+    │       │   └── RouteFinder.java
+    │       └── ui/
+    │           ├── ConsoleUI.java
+    │           ├── InputEndedException.java
+    │           ├── InputReader.java
+    │           └── RouteFormatter.java
+    └── test/
+        └── java/
+            ├── app/
+            │   └── MetroNavigatorAppTest.java
+            ├── model/
+            │   ├── ConnectionTest.java
+            │   ├── MetroLineTest.java
+            │   ├── RouteTest.java
+            │   ├── StationNodeTest.java
+            │   └── StationTest.java
+            ├── network/
+            │   ├── MetroNetworkTest.java
+            │   └── data/
+            │       └── WarsawMetroDataTest.java
+            ├── routing/
+            │   ├── RouteCostTest.java
+            │   ├── RouteFinderTest.java
+            │   └── WarsawRoutesTest.java
+            └── ui/
+                ├── ConsoleUITest.java
+                ├── InputReaderTest.java
+                └── RouteFormatterTest.java
 ```
 
-The network and routing code knows nothing about Warsaw. All Warsaw stations, the line order, and the transfer are defined in `WarsawMetroData`, so the rest of the program could work with another city's data.
+- `Main` builds the objects and starts the application.
+- `app`: `MetroNavigatorApp` runs the dialogue from the welcome message to the route.
+- `model`: the domain objects, such as stations, lines, connections, and routes.
+- `network`: `MetroNetwork`, a generic network of lines and connections; `network.data` holds `WarsawMetroData`, the
+  only place that knows the Warsaw stations.
+- `routing`: `RouteFinder` searches for a route; `RouteCost` holds its stops and transfers.
+- `ui`: `ConsoleUI` asks the questions and prints the answers, `InputReader` validates numbered choices, and
+  `RouteFormatter` turns a route into text.
+
+How the parts work together:
+
+```mermaid
+flowchart LR
+    Main --> App[MetroNavigatorApp]
+    Main --> Data[WarsawMetroData]
+    Data -->|builds| Network[MetroNetwork]
+    App --> UI[ConsoleUI]
+    UI --> Input[InputReader]
+    App --> Finder[RouteFinder]
+    App --> Formatter[RouteFormatter]
+    Finder --> Network
+    Formatter --> Network
+```
+
+`MetroNetwork`, `RouteFinder`, and `RouteFormatter` know nothing about Warsaw. All Warsaw stations, the line order, and
+the transfer are defined in `WarsawMetroData`, so the rest of the program could work with another city's data.
 
 ## How it works
 
-**The network as a graph.** Every station on a line is a node, so Świętokrzyska on M1 and Świętokrzyska on M2 are two different nodes. Neighboring stations on a line are connected by rides, and the two Świętokrzyska nodes are connected by a transfer. A ride counts as one stop; a transfer counts as one transfer and no stops.
+**The network as a graph.** Every station on a line is a node, so Świętokrzyska on M1 and Świętokrzyska on M2 are two
+different nodes. Neighboring stations on a line are connected by rides, and the two Świętokrzyska nodes are connected by
+a transfer. A ride counts as one stop; a transfer counts as one transfer and no stops.
 
-**Route search.** `RouteFinder` uses depth-first search with backtracking: it follows connections from the start, steps back from dead ends, and never returns to a station it has already visited. It runs in O(V + E) time for V nodes and E connections.
+**Route search.** `RouteFinder` uses depth-first search with backtracking: it follows connections from the start, steps
+back from dead ends, and never returns to a station it has already visited. It runs in O(V + E) time for V nodes and E
+connections.
 
-**Travel direction.** The direction is derived from the order of the stations on a line: a ride towards a later station heads towards the last station of the line, a ride towards an earlier one heads towards the first. No line or station is special-cased.
+**Travel direction.** The direction is derived from the order of the stations on a line: a ride towards a later station
+heads towards the last station of the line, a ride towards an earlier one heads towards the first. No line or station is
+special-cased.
 
-**Testable input and output.** `InputReader` and `ConsoleUI` receive their input (`Scanner`) and output (`PrintStream`) through the constructor. The program passes the keyboard and the screen; the tests pass prepared answers and capture the output in memory.
+**Testable input and output.** `InputReader` and `ConsoleUI` receive their input (`Scanner`) and output (`PrintStream`)
+through the constructor. The program passes the keyboard and the screen; the tests pass prepared answers and capture the
+output in memory.
 
 ## Tests
 
-Over 100 JUnit 5 tests cover the domain model, the network, the Warsaw data, route finding on a small synthetic network and on the real network, the route text, input validation, and complete runs of the application whose output is compared character by character with the expected dialogue.
+Over 100 JUnit 5 tests cover the domain model, the network, the Warsaw data, route finding on a small synthetic network
+and on the real network, the route text, input validation, and complete runs of the application whose output is compared
+character by character with the expected dialogue.
 
 ## Design decisions and limitations
 
-- **Depth-first search instead of a shortest-path algorithm.** With two lines and one transfer station, there is exactly one way between any two stations without going back, so the first route found is also the best one. A network with alternative ways (for example, after adding line M3) would need a search that compares route costs, such as Dijkstra's algorithm.
+- **Depth-first search instead of a shortest-path algorithm.** With two lines and one transfer station, there is exactly
+  one way between any two stations without going back, so the first route found is also the best one. A network with
+  alternative ways (for example, after adding line M3) would need a search that compares route costs, such as Dijkstra's
+  algorithm.
 - **Warsaw only.** The generic network and the city data are separated, but choosing a city is not part of this version.
 
 ## Development
 
-Developed with [Claude Code](https://claude.com/claude-code) as an AI pair programmer. I wrote the specification, made the design decisions, and reviewed every change.
+Developed with [Claude Code](https://claude.com/claude-code) as an AI pair programmer. I wrote the specification, made
+the design decisions, and reviewed every change.
