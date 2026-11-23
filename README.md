@@ -140,9 +140,13 @@ flowchart LR
     UI --> Input[InputReader]
     App --> Finder[RouteFinder]
     App --> Formatter[RouteFormatter]
+    UI --> Network
     Finder --> Network
     Formatter --> Network
 ```
+
+The model classes (`Station`, `StationNode`, `Connection`, `Route`, …) are used throughout and are left out of the
+diagram for clarity.
 
 `MetroNetwork`, `RouteFinder`, and `RouteFormatter` know nothing about Warsaw. All Warsaw stations, the line order, and
 the transfer are defined in `WarsawMetroData`, so the rest of the program could work with another city's data.
