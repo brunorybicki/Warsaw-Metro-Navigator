@@ -1,5 +1,7 @@
 # Warsaw Metro Navigator
 
+[![Tests](https://github.com/brunorybicki/Warsaw-Metro-Navigator/actions/workflows/tests.yml/badge.svg)](https://github.com/brunorybicki/Warsaw-Metro-Navigator/actions/workflows/tests.yml)
+
 A command-line route planner for the Warsaw Metro, written in Java. Choose a starting station and a destination on lines
 M1 and M2, and the program prints the route with the travel direction, the transfer, and the number of stops.
 
